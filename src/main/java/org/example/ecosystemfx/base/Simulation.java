@@ -48,7 +48,7 @@ public class Simulation {
     /**
      * List of the animals currently in the simulation. Updates each turn
      */
-    public static ArrayList<Animal> animals = new ArrayList<Animal>();
+    public static ArrayList<Animal> animals; //TODO : Is it a good idea to have it as static ?
     /**
      * Size of the simulation board [width, length]
      */
@@ -239,6 +239,7 @@ public class Simulation {
      */
     private void init_animals(int[] animal_numbers) throws BadGroundException {
         int n = 0; //Index of each animal type
+        this.animals = new ArrayList<Animal>(); //initializes the list
         for (int i = 0; i < animal_numbers.length; i++){
             for (int j = 0; j < animal_numbers[i]; j++){
                 switch (i){ //Is there a better way to do this ?? Like by putting class references into an array ?
@@ -273,6 +274,10 @@ public class Simulation {
             }
             n += animal_numbers[i]; // Next index
         }
+    }
+
+    public ArrayList<Animal> getAnimals() {
+        return new ArrayList<>(animals); // return a copy to preserve immutability
     }
 
     public static void main(String[] args) throws BadGroundException {

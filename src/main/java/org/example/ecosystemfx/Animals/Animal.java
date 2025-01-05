@@ -5,6 +5,8 @@ import org.example.ecosystemfx.Resources.TerrainResources;
 import org.example.ecosystemfx.base.Biomass;
 import org.example.ecosystemfx.base.Terrain2D;
 import org.example.ecosystemfx.base.Simulation;
+import javafx.scene.paint.Color;
+
 
 import java.util.*;
 import static java.lang.Integer.min;
@@ -12,7 +14,6 @@ import static java.lang.Integer.min;
 public abstract class Animal extends Biomass {
 
     public int sat_max = 10;
-
     public enum sexes {M, F};
     private int satiety;
     protected Biomass.species specie;
@@ -25,7 +26,6 @@ public abstract class Animal extends Biomass {
     protected List<Integer> detectedFood;
     protected List<Integer> toFlee = new ArrayList<>(Arrays.asList(null, 0));
     public Biomass toEat = null;
-
 
     public Animal(int x, int y) {
         super(x, y);
@@ -290,5 +290,5 @@ public abstract class Animal extends Biomass {
         }
         return Simulation.Decisions.ATTACK;
     }
-
+    public abstract Color getColor();
 }

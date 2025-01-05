@@ -1,16 +1,18 @@
 package org.example.ecosystemfx.Resources;
 
+import javafx.scene.paint.Color;
 import org.example.ecosystemfx.base.Biomass;
 
 public abstract class TerrainResources extends Biomass {
 
     public enum food {FISH, ALGAE, GRASS, BERRIES};
-
     protected int calories;
     protected int TTR_Max; // Time To Regenerate in number of rounds
     protected int TTR;
     protected int x;
     protected int y;
+
+    public abstract Color getColor();
 
     public void setBites(int bites) {
         if (bites > 3) {

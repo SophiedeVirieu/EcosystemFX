@@ -28,6 +28,7 @@ public class Terrain2D extends Canvas {
     private final Color plainColor = new Color(181 / 255.0, 230 / 255.0, 29 / 255.0, 1);
     private final Color forestColor = new Color(34 / 255.0, 177 / 255.0, 76 / 255.0, 1);
 
+
     public Terrain2D(int width, int height) {
         super(width * cellSize, height * cellSize);
         heights = generateTerrain(width, height);
@@ -210,20 +211,7 @@ public class Terrain2D extends Canvas {
 
         for (TerrainResources resource : listTerrainResources) {
             if (resource.isAlive()) {
-                Color color;
-                if (resource instanceof Fish) {
-                    color = fishColor;
-                } else if (resource instanceof Algae) {
-                    color = algaeColor;
-                } else if (resource instanceof Herb) {
-                    color = herbColor;
-                } else if (resource instanceof Berry) {
-                    color = berryColor;
-                } else {
-                    continue;
-                }
-
-                gc.setFill(color);
+                gc.setFill(resource.getColor());
 
                 int centerX = resource.getX() * cellSize + cellSize / 4;
                 int centerY = resource.getY() * cellSize + cellSize / 4;
@@ -234,10 +222,7 @@ public class Terrain2D extends Canvas {
 
         // animals
         for (Animal a : Simulation.animals) {
-
-            Color color = Color.BLACK;
-
-            gc.setFill(color);
+            gc.setFill(a.getColor());
 
             int centerX = a.x * cellSize + cellSize / 2;
             int centerY = a.y * cellSize + cellSize / 2;
