@@ -11,7 +11,7 @@ import java.util.*;
 
 public class Terrain2D extends Canvas {
     private static int[][] heights;
-    private static final int cellSize = 10; // Taille de chaque "case" du terrain
+    private static final int cellSize = 10;
     public static final List<List<Integer>> list_Fish = new ArrayList<>();
     public static final List<List<Integer>> list_Algae = new ArrayList<>();
     public static final List<List<Integer>> list_Herb = new ArrayList<>();
@@ -28,7 +28,13 @@ public class Terrain2D extends Canvas {
     private final Color plainColor = new Color(181 / 255.0, 230 / 255.0, 29 / 255.0, 1);
     private final Color forestColor = new Color(34 / 255.0, 177 / 255.0, 76 / 255.0, 1);
 
-
+    /**
+     * Constructs a 2D terrain.
+     * Initializes the terrain heights, smoothes the terrain, and associates resources with food types.
+     *
+     * @param width  The width of the terrain in number of cells.
+     * @param height The height of the terrain in number of cells.
+     */
     public Terrain2D(int width, int height) {
         super(width * cellSize, height * cellSize);
         heights = generateTerrain(width, height);
@@ -43,11 +49,22 @@ public class Terrain2D extends Canvas {
         foodToList.put(TerrainResources.food.BERRIES, list_Berry);
     }
 
+    /**
+     * getter of the canva.
+     *
+     * @return The Canvas representing the terrain.
+     */
     public Canvas getCanvas() {
         return canvas;
     }
 
-    // Génération du terrain 2D avec des hauteurs aléatoires
+    /**
+     * Generates a 2D array representing the terrain heights with random values.
+     *
+     * @param width  The width of the terrain in number of cells.
+     * @param height The height of the terrain in number of cells.
+     * @return A 2D array of integers representing terrain heights, between 0 and 255.
+     */
     private int[][] generateTerrain(int width, int height) {
         int[][] terrain = new int[width][height];
         Random random = new Random();
@@ -61,7 +78,12 @@ public class Terrain2D extends Canvas {
         return terrain;
     }
 
-    // Lissage du terrain
+    /**
+     * Smoothens the terrain by averaging the heights of neighboring cells over a specified number of iterations.
+     *
+     * @param terrain    The 2D array representing the terrain heights.
+     * @param iterations The number of smoothing iterations to apply.
+     */
     private void smoothTerrain(int[][] terrain, int iterations) {
         int width = terrain.length;
         int height = terrain[0].length;
@@ -96,6 +118,12 @@ public class Terrain2D extends Canvas {
         }
     }
 
+    /**
+     * Draws the terrain on the canvas. The color depends to the type of terrain.
+     * Generates the terrain resources and draws them as colored dots.
+     * The coordinates of the terrain resources are saved in lists matching the type of resource.
+     * The addresses of the terrain resources objects are saved in a list.
+     */
     public void draw() {
         GraphicsContext gc = this.canvas.getGraphicsContext2D();
 
@@ -164,7 +192,15 @@ public class Terrain2D extends Canvas {
         }
     }
 
-
+    /**
+     * Retrieves the terrain resources near a specified position within a given radius.
+     *
+     * @param x         The x-coordinate of the position.
+     * @param y         The y-coordinate of the position.
+     * @param sense     Ability to detect food, taken as the radius around the position.
+     * @param Resources The list of resources to search within.
+     * @return A list of coordinates representing the neighboring terrain resources.
+     */
     public static List<List<Integer>> Neighbours(int x, int y, int sense, List<List<Integer>> Resources) {
         // Fonction that returns the terrain ressources taht are near the animal
         List<List<Integer>> SenseZone = new ArrayList<>();
@@ -173,7 +209,7 @@ public class Terrain2D extends Canvas {
                 if (Resources.contains(List.of(i, j))){
                     for (int k=0; k < listTerrainResources.size(); k++) {
                         if (listTerrainResources.get(k).getX() == x && listTerrainResources.get(k).getY() == y) {
-                            if (listTerrainResources.get(k).isAlive()==true) {
+                            if (listTerrainResources.get(k).isAlive()) {
                                 SenseZone.add(List.of(i, j));
                             }
                         }
@@ -184,6 +220,10 @@ public class Terrain2D extends Canvas {
         return SenseZone;
     }
 
+    /**
+     * Clears and redraws the terrain on the canvas. 
+     * The positions of animals and the alive status of the resources have been updated and should be taken into account.
+     */
     public void updateAndDraw() {
         GraphicsContext gc = this.canvas.getGraphicsContext2D();
 
@@ -209,6 +249,7 @@ public class Terrain2D extends Canvas {
             }
         }
 
+        // Draw the alive resources
         for (TerrainResources resource : listTerrainResources) {
             if (resource.isAlive()) {
                 gc.setFill(resource.getColor());
@@ -220,7 +261,7 @@ public class Terrain2D extends Canvas {
             }
         }
 
-        // animals
+        // Draw the animals
         for (Animal a : Simulation.animals) {
             gc.setFill(a.getColor());
 
@@ -233,7 +274,13 @@ public class Terrain2D extends Canvas {
     }
 
 
-    // Gives the type of ground of a position
+    /**
+     * Determines the type of terrain at a specific position.
+     *
+     * @param x The x-coordinate of the position.
+     * @param y The y-coordinate of the position.
+     * @return The type of ground at the specified position : WATER, SAND, PLAIN, or FOREST.
+     */
     public static Biomass.grounds getTerrain(int x, int y) {
         double height = heights[x][y];
         if (height < 123) {
