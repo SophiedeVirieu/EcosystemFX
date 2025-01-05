@@ -148,7 +148,7 @@ public class Simulation {
     /**
      * Manages the end of each turn; removing killed animals, TODO : OTHER THINGS ??
      */
-    private void turn_end(){git
+    private void turn_end(){
         ArrayList<Animal> survivors = new ArrayList<Animal>(); //Is a new array list each turn ?? Normally yes, bc it is a local variable
         for (int i = 0; i < animals.size(); i++) { //Kill related animals
             Animal a = animals.get(i);
