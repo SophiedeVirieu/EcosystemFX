@@ -55,13 +55,6 @@ public abstract class Animal extends Biomass {
     }
 
     protected void move(int x_aim, int y_aim) {
-        if (x_aim <0 || y_aim <0 ||
-                x_aim >= IHM.width || y_aim >= IHM.height ||
-                    !this.ground.contains(Terrain2D.getTerrain(x_aim, y_aim))){
-
-            // forbidden terrain or out of bounds: don't move
-            return;
-        }
 
         //Calculation of the vector
         int x_v = x_aim - this.x;
@@ -75,13 +68,30 @@ public abstract class Animal extends Biomass {
         y_v = (int)(y_v*this.speed / norm);
 
         //Move to the arrival case
-        try {
-            this.x += x_v;
-            this.y += y_v;
-        }
-        catch (ArrayIndexOutOfBoundsException e) { // limits of the terrain reached
+        int new_x = this.x + x_v;
+        int new_y = this.y + y_v;
+
+        if (new_x <0 || new_y <0 ||
+                new_x >= IHM.width || new_y >= IHM.height){
+
+            //out of bounds: don't move
             return;
         }
+        else if (!this.ground.contains(Terrain2D.getTerrain(new_x, new_y))){
+
+            //forbidden terrain : don't go so fast
+            if (new_x>this.x){new_x = this.x+1;} else {new_x = this.x-1;}
+            if (new_y>this.y){new_y = this.y+1;} else {new_y = this.y-1;}
+
+            if (!this.ground.contains(Terrain2D.getTerrain(new_x, new_y))){
+                System.out.println("pb of ground");
+                return;
+            }
+        }
+
+        this.x = new_x;
+        this.y = new_y;
+
     }
 
     // to call only if the animal is female
@@ -155,8 +165,8 @@ public abstract class Animal extends Biomass {
     public void migrate(){
         // TODO : meteo
         Random rand = new Random();
-        int xAim = rand.nextInt(15);
-        int yAim = rand.nextInt(15);
+        int xAim = rand.nextInt(-5, 5);
+        int yAim = rand.nextInt(-5, 5);
         move(xAim, yAim);
     }
 

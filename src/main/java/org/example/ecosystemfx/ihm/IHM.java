@@ -23,7 +23,7 @@ public class IHM extends Application {
         Terrain2D terrain = new Terrain2D(width, height);
         terrain.draw();
 
-        simulation = new Simulation(new int[]{width, height}, new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9});
+        simulation = new Simulation(new int[]{width, height}, new int[]{5, 5, 5, 7, 5, 6, 7, 8, 9});
 
         Button startButton = new Button("Start");
         Button stopButton = new Button("Stop");
