@@ -13,20 +13,50 @@ import static java.lang.Integer.min;
 
 public abstract class Animal extends Biomass {
 
+    /**
+    * Maximum satiety
+    */
     public int sat_max = 10;
+    
     public enum sexes {M, F};
     private int satiety;
     protected Biomass.species specie;
     protected List<Biomass.species> preys;
     protected List<TerrainResources.food> myFood;
+
+    /**
+    * Ability to track food.
+    */
     protected int voracity;
     protected sexes sex;
     protected int speed;
-    protected int camouflage;
+
+    /**
+    * Coordinates of detected food.
+    */
     protected List<Integer> detectedFood;
+
+    /**
+    * Coordinates of a detected predator.
+    */
     protected List<Integer> toFlee = new ArrayList<>(Arrays.asList(null, 0));
+
+    /**
+    * Adress of the object to eat imminently, because it is accessed
+    */
     public Biomass toEat = null;
 
+    /**
+     * Constructor for the `Animal` class.
+     * 
+     * - Initializes an Animal instance with coordinates (x, y) and assigns random 
+     *   values for satiety and voracity.
+     * - Determines the sex of the animal randomly.
+     * - Initializes the lists for preys, food types, and detected food.
+     * 
+     * @param x The initial x coordinate of the animal.
+     * @param y The initial y coordinate of the animal.
+     */
     public Animal(int x, int y) {
         super(x, y);
         Random rand = new Random();
