@@ -66,7 +66,6 @@ public abstract class TerrainResources extends Biomass {
         return Alive;
     }
 
-    // Methode de class
     public void Regeneartion(int weather) {
         if (!this.Alive) {
             if (this.TTR <= 0) {
