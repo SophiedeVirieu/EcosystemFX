@@ -19,6 +19,8 @@ public class Turtle extends Animal {
         this.speed = 1;
         this.camouflage = 1;
         this.calories = 9;
+
+        setY(y);
     }
 
     @Override

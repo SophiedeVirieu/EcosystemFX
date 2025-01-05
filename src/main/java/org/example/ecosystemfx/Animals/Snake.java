@@ -17,6 +17,8 @@ public class Snake extends Animal {
         this.speed = 2;
         this.camouflage = 3;
         this.calories = 5;
+
+        setY(y);
     }
 
     @Override

@@ -19,6 +19,8 @@ public class Hedgehog extends Animal {
         this.speed = 1;
         this.camouflage = 2;
         this.calories = 5;
+
+        setY(y);
     }
 
     @Override

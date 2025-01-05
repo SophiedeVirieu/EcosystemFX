@@ -21,6 +21,8 @@ public class Seagull extends Animal {
         this.speed = 3;
         this.camouflage = 1;
         this.calories = 4;
+
+        setY(y);
     }
 
     @Override
