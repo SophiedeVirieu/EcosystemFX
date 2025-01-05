@@ -166,12 +166,18 @@ public class Terrain2D extends Canvas {
 
 
     public static List<List<Integer>> Neighbours(int x, int y, int sense, List<List<Integer>> Resources) {
-        // TODO : prendre en compte le paramètre Alive
+        // Fonction that returns the terrain ressources taht are near the animal
         List<List<Integer>> SenseZone = new ArrayList<>();
         for (int i = x - sense; i < x + sense + 1; i++) {
             for (int j = y - sense; j < y + sense + 1; j++) {
-                if (Resources.contains(List.of(i, j))) {
-                    SenseZone.add(List.of(i, j));
+                if (Resources.contains(List.of(i, j))){
+                    for (int k=0; k < listTerrainResources.size(); k++) {
+                        if (listTerrainResources.get(k).getX() == x && listTerrainResources.get(k).getY() == y) {
+                            if (listTerrainResources.get(k).isAlive()==true) {
+                                SenseZone.add(List.of(i, j));
+                            }
+                        }
+                    }
                 }
             }
         }

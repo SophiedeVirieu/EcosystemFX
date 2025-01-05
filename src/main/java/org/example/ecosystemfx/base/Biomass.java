@@ -23,12 +23,9 @@ public abstract class Biomass {
         if (this.ground.contains(Terrain2D.getTerrain(this.x, this.y))) {
             this.y = y;
         } else {
-            System.out.println("setter appelé et réfléchissant");
-            //TODO : chercher la zone autorisée la plus proche
-            //s'y positionner
-
             int radius = 1;
 
+            //search a near authorized terrain
             while (true) {
                 List<int[]> positions = new ArrayList<>();
 
