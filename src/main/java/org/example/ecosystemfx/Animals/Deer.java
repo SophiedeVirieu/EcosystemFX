@@ -17,6 +17,8 @@ public class Deer extends Animal {
         this.speed = 4;
         this.camouflage = 2;
         this.calories = 8;
+
+        setY(y);
     }
 
     @Override

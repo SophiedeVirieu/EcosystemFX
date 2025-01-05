@@ -41,8 +41,17 @@ public abstract class Animal extends Biomass {
         this.detectedFood = new ArrayList<>(Arrays.asList(null, 0));
     }
 
+    /**
+     * Simulates the attack of another biomass entity (prey or food).
+     * The prey's "bites" counter is increased.
+     * If the prey's bites exceed a threshold, the prey dies, and the predator increases its satiety.
+     *
+     * After eating, the animal resets its detected food coordinates, signifying that no food is currently in sight.
+     *
+     * @param eaten The biomass entity being eaten by the animal.
+     *              It is supposed to be one of the animal's preys or food.
+     */
     public void eat(Biomass eaten) {
-        /* Supposes that this is one of the food's predators */
 
         eaten.bites += 2;
         if (eaten.bites>3){ //if food is dead
@@ -54,7 +63,25 @@ public abstract class Animal extends Biomass {
 
     }
 
+    /**
+     * Moves the animal toward a specified target position (x_aim, y_aim).
+     * The movement is calculated using a normalized vector scaled by the animal's speed.
+     * The method ensures that the animal does not move out of bounds or into forbidden terrain.
+     *
+     * @param x_aim The x-coordinate of the target position.
+     * @param y_aim The y-coordinate of the target position.
+     */
     protected void move(int x_aim, int y_aim) {
+
+        if (Math.sqrt(Math.pow(x_aim - this.x, 2) + Math.pow(y_aim - this.y, 2))<= this.speed){
+            if (!Biomass.isValidPosition(x_aim, y_aim)
+                        || !this.ground.contains(Terrain2D.getTerrain(x_aim, y_aim))){
+                return;
+            }
+            this.x = x_aim;
+            this.y = y_aim;
+            return;
+        }
 
         //Calculation of the vector
         int x_v = x_aim - this.x;
@@ -62,7 +89,7 @@ public abstract class Animal extends Biomass {
         double norm = Math.sqrt(x_v*x_v + y_v*y_v);
 
         //unit vector * speed
-        if (this.speed > norm){norm = this.speed;}// do not go further than the aim
+        if (this.speed > norm){norm = this.speed;} // don't go further than the aim
 
         x_v = (int)(x_v*this.speed / norm);
         y_v = (int)(y_v*this.speed / norm);
@@ -71,8 +98,7 @@ public abstract class Animal extends Biomass {
         int new_x = this.x + x_v;
         int new_y = this.y + y_v;
 
-        if (new_x <0 || new_y <0 ||
-                new_x >= IHM.width || new_y >= IHM.height){
+        if (!Biomass.isValidPosition(new_x, new_y)){
 
             //out of bounds: don't move
             return;
@@ -80,8 +106,8 @@ public abstract class Animal extends Biomass {
         else if (!this.ground.contains(Terrain2D.getTerrain(new_x, new_y))){
 
             //forbidden terrain : don't go so fast
-            if (new_x>this.x){new_x = this.x+1;} else {new_x = this.x-1;}
-            if (new_y>this.y){new_y = this.y+1;} else {new_y = this.y-1;}
+            if (new_x>this.x){new_x = this.x+1;} else {new_x = Math.abs(this.x-1);}
+            if (new_y>this.y){new_y = this.y+1;} else {new_y = Math.abs(this.y-1);}
 
             if (!this.ground.contains(Terrain2D.getTerrain(new_x, new_y))){
                 System.out.println("pb of ground");
@@ -94,14 +120,23 @@ public abstract class Animal extends Biomass {
 
     }
 
-    // to call only if the animal is female
+    /**
+     * Simulates the reproduction process.
+     * This method lowers the animal's satiety.
+     * It is intended to be called only if the animal is female.
+     *
+     * This method is overwritten in all the subclasses, in order to create another instance of animal.
+     */
     public void reproduce(){
-        /* create an animal next to this */
         this.satiety = 2;
     }
 
+    /**
+     * Searches for the nearest available food within the animal's detection radius given by its voracity.
+     * The method scans for both terrain-based food resources and preys.
+     * It updates the detectedFood list with the coordinates of the nearest food, if any.
+     */
     protected void detectFood(){
-        /* Search the nearest food */
 
         List<List<Integer>> detected = new ArrayList<>(); //the list of coordinates of detected food
 
@@ -133,6 +168,11 @@ public abstract class Animal extends Biomass {
 
     }
 
+    /**
+     * Detects the nearest predator within a fixed radius around the animal.
+     * If a predator is detected, its coordinates are saved in the toFlee list.
+     * The method calculates distances to determine the closest predator.
+     */
     public void detectPredator(){
 
         List<List<Integer>> detected = new ArrayList<>();
@@ -162,6 +202,10 @@ public abstract class Animal extends Biomass {
 
     }
 
+    /**
+     * Moves the animal to a random nearby location within a range of -5 to 5 units in both x and y directions.
+     * The movement simulates random migration behavior. This method uses the `move` function for execution.
+     */
     public void migrate(){
         // TODO : meteo
         Random rand = new Random();
@@ -170,16 +214,34 @@ public abstract class Animal extends Biomass {
         move(xAim, yAim);
     }
 
+    /**
+     * Moves the animal away from a detected predator.
+     * The target position is calculated as the symmetric point of the predator's position with respect to the current position.
+     * This method relies on the move() function.
+     */
     public void flee(){
-        // go to the symmetric point of the danger with respect to the animal
         move(2*this.x -this.toFlee.get(0), 2*this.y -this.toFlee.get(1));
-
     }
 
+    /**
+     * Moves the animal toward the detected food's position.
+     * The food's coordinates are in the detectedFood list, and the move() function is used.
+     */
     public void attack(){
         move(detectedFood.get(0), detectedFood.get(1));
     }
 
+    /**
+     * Determines the animal's next action.
+     * The decision is made based on these criteria:
+     * - If the animal is a female with maximum satiety, it decides to reproduce.
+     * - If food is detected at the current position, the animal decides to eat.
+     * - If a predator is detected, the animal decides to flee.
+     * - If no food is detected nearby, the animal decides to migrate.
+     * - Otherwise, the animal decides to attack.
+     *
+     * @return The next action to be performed by the animal, represented as a value from the Simulation.Decisions enum.
+     */
     public Simulation.Decisions decide(){
         /* criteria between FLEE and ATTACK : what is the nearest */
 

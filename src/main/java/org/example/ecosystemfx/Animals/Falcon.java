@@ -16,6 +16,8 @@ public class Falcon extends Animal {
 
         this.speed = 4;
         this.camouflage = 1;
+
+        setY(y);
     }
 
     @Override

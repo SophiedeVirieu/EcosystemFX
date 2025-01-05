@@ -15,6 +15,8 @@ public class Wolf extends Animal {
 
         this.speed = 4;
         this.camouflage = 3;
+
+        setY(y);
     }
 
     @Override

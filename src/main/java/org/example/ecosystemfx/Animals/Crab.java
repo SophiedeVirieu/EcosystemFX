@@ -18,6 +18,8 @@ public class Crab extends Animal {
         this.camouflage = 3;
         this.calories = 4;
 
+        setY(y);
+
     }
 
     @Override
