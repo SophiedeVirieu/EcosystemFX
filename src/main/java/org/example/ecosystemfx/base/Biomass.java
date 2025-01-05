@@ -8,7 +8,7 @@ import java.util.List;
 public abstract class Biomass {
 
     public enum species {CRAB, JELLY_FISH, SEAGULL, DEER, WOLF, HEDGEHOG,
-        SNAKE, FALCON, SHARK, TURTLE};
+        SNAKE, FALCON, SHARK, TURTLE, HUMAN};
     public enum grounds {WATER, SAND, PLAIN, FOREST};
     public enum meteos {SUN, RAIN}; //voir si on en fait quelque chose
 
