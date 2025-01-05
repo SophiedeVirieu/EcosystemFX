@@ -1,6 +1,7 @@
 package org.example.ecosystemfx.Animals;
 
 import javafx.scene.paint.Color;
+import org.example.ecosystemfx.base.Simulation;
 import org.example.ecosystemfx.base.Terrain2D;
 
 public class Falcon extends Animal {
@@ -26,7 +27,7 @@ public class Falcon extends Animal {
     @Override
     public void reproduce() {
         if (this.ground.contains(Terrain2D.getTerrain(this.x +1, this.y))) {
-            new Falcon(this.x + 1, this.y);
+            Simulation.animals.add(new Falcon(this.x + 1, this.y));
             super.reproduce();
         }
     }

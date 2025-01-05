@@ -1,6 +1,7 @@
 package org.example.ecosystemfx.Animals;
 import javafx.scene.paint.Color;
 import org.example.ecosystemfx.Resources.TerrainResources;
+import org.example.ecosystemfx.base.Simulation;
 import org.example.ecosystemfx.base.Terrain2D;
 
 public class Humans extends Animal {
@@ -32,7 +33,7 @@ public class Humans extends Animal {
     @Override
     public void reproduce() {
         if (this.ground.contains(Terrain2D.getTerrain(this.x +1, this.y))) {
-            new Crab(this.x +1, this.y);
+            Simulation.animals.add(new Humans(this.x +1, this.y));
             super.reproduce();
         }
     }
