@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 import static org.example.ecosystemfx.base.Terrain2D.foodToList;
+import static org.example.ecosystemfx.base.Terrain2D.listTerrainResources;
 
 /**
  * The Simulation class runs the simulation turn by turn:
@@ -165,8 +166,8 @@ public class Simulation {
             }
         }
         int weather = weather(pastWeather);
-        for (int i = 0; i < foodToList.size(); i++) {
-            TerrainResources food = (TerrainResources) foodToList.get(i);
+        for (int i = 0; i < listTerrainResources.size(); i++) {
+            TerrainResources food = (TerrainResources) listTerrainResources.get(i);
             food.Regeneartion(weather);
         }
         pastWeather = weather;
