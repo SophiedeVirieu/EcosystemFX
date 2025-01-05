@@ -1,8 +1,11 @@
 package org.example.ecosystemfx.base;
 import org.example.ecosystemfx.Animals.*;
+import org.example.ecosystemfx.Resources.TerrainResources;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.ArrayList;
+
+import static org.example.ecosystemfx.base.Terrain2D.foodToList;
 
 /**
  * The Simulation class runs the simulation turn by turn:
@@ -53,6 +56,7 @@ public class Simulation {
     //private terrain board;
     public static Random rand = new Random(); //TODO : Is it useful to have it as a class constant ? can I not create in the method where it is used ?
 
+    public int pastWeather = 1;
 
     /**
      * This function runs the simulation.
@@ -148,7 +152,7 @@ public class Simulation {
     /**
      * Manages the end of each turn; removing killed animals, TODO : OTHER THINGS ??
      */
-    private void turn_end(){git
+    private void turn_end(){
         ArrayList<Animal> survivors = new ArrayList<Animal>(); //Is a new array list each turn ?? Normally yes, bc it is a local variable
         for (int i = 0; i < animals.size(); i++) { //Kill related animals
             Animal a = animals.get(i);
@@ -160,9 +164,43 @@ public class Simulation {
 
             }
         }
+        int weather = weather(pastWeather);
+        for (int i = 0; i < foodToList.size(); i++) {
+            TerrainResources food = (TerrainResources) foodToList.get(i);
+            food.Regeneartion(weather);
+        }
+        pastWeather = weather;
         this.animals = survivors; //Replace the list with the updated list of animals. DOES IT WORK ? SHOULD I COPY THE LIST BC SURVIVORS WILL BE DESTROYED AT END OF FUNTION CALL ?
     }
 
+    private int weather(int pastWeather) {
+        float propability = rand.nextFloat();
+        if (pastWeather == 0){ // drought
+            if (propability < 0.80){
+                return 0;
+            } else if (propability < 0.9){
+                return 1;
+            } else {
+                return 2;
+            }
+        }else if (pastWeather == 1){ // normal weather
+            if (propability < 0.9){
+                return 1;
+            }else if (propability < 0.95){
+                return 0;
+            }else {
+                return 2;
+            }
+        }else { // rain
+            if (propability < 0.75){
+                return 2;
+            }else if (propability < 0.9){
+                return 1;
+            }else {
+                return 0;
+            }
+        }
+    }
 
 
     /**

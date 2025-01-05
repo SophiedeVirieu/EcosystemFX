@@ -65,12 +65,12 @@ public abstract class TerrainResources extends Biomass {
     }
 
     // Methode de class
-    public void Regeneartion() {
+    public void Regeneartion(int weather) {
         if (this.TTR <= 0) {
             this.TTR = 0;
             this.Alive = true;
         } else {
-            this.TTR -= 1;
+            this.TTR -= 1*weather;
         }
     }
 
