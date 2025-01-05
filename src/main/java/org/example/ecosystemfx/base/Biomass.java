@@ -19,6 +19,17 @@ public abstract class Biomass {
     protected int x;
     protected int y;
 
+    /**
+     * Sets the x and y coordinate of the Biomass, ensuring that the new position
+     * is located on a valid terrain.
+     * 
+     * - If the current terrain is not valid for this Biomass, it searches for
+     *   a valid terrain nearby.
+     * - The search expands in the x, -x, y and -y directions further and further until a valid terrain is found.
+     * 
+     * 
+     * @param y The proposed new y coordinate.
+     */
     public void setY(int y) {
         if (this.ground.contains(Terrain2D.getTerrain(this.x, this.y))) {
             this.y = y;
@@ -54,6 +65,14 @@ public abstract class Biomass {
         }
     }
 
+   /**
+     * Constructor for the Biomass class.
+     * Initializes a Biomass instance with coordinates (x, y).
+     * Initializes the predator and terrain lists.
+     * 
+     * @param x The initial x coordinate of the biomass.
+     * @param y The initial y coordinate of the biomass.
+     */
     public Biomass(int x, int y){
         this.x = x;
         this.y = y;
@@ -62,6 +81,15 @@ public abstract class Biomass {
         this.ground = new ArrayList<grounds>();
     }
 
+    /**
+     * Checks if a given position (x, y) is valid within the terrain's boundaries.
+     * 
+     * The terrain's boundaries are defined by the dimensions width and height.
+     * 
+     * @param x The x coordinate of the position to check.
+     * @param y The y coordinate of the position to check.
+     * @return true if the position is within boundaries, false otherwise.
+     */
     protected static boolean isValidPosition(int x, int y) {
         return x >= 0 && x < IHM.width && y >= 0 && y < IHM.height;
     }
