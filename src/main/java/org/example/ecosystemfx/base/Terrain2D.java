@@ -165,6 +165,7 @@ public class Terrain2D extends Canvas {
 
 
     public static List<List<Integer>> Neighbours(int x, int y, int sense, List<List<Integer>> Resources) {
+        // Fonction that returns the terrain ressources taht are near the animal
         List<List<Integer>> SenseZone = new ArrayList<>();
         for (int i = x - sense; i < x + sense + 1; i++) {
             for (int j = y - sense; j < y + sense + 1; j++) {
