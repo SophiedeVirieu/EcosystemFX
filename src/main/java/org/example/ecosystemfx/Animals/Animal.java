@@ -253,7 +253,7 @@ public abstract class Animal extends Biomass {
 
         for (TerrainResources.food f : myFood){
             try {
-                detected = Terrain2D.Neighbours(this.x, this.y, 0, Terrain2D.foodToList.get(f)).getFirst();
+                detected = Terrain2D.Neighbours(this.x, this.y, 1, Terrain2D.foodToList.get(f)).getFirst();
             }
             catch (NoSuchElementException e){ // if nothing is detected
                 break;
