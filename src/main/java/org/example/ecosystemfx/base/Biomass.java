@@ -7,15 +7,37 @@ import java.util.List;
 
 public abstract class Biomass {
 
+    /**
+     * Enum representing the different species possible in the ecosystem.
+     */
     public enum species {CRAB, JELLY_FISH, SEAGULL, DEER, WOLF, HEDGEHOG,
         SNAKE, FALCON, SHARK, TURTLE, HUMAN};
+    
+    /**
+     * Enum representing the different types of terrains.
+     */
     public enum grounds {WATER, SAND, PLAIN, FOREST};
-    public enum meteos {SUN, RAIN}; //voir si on en fait quelque chose
 
     protected List<species> predators;
+    
+    /**
+     * List of authorized terrain types for this Biomass.
+     */
     protected List<grounds> ground;
+    
+    /**
+     * Number of calories contained in this Biomass.
+     */
     public int calories;
+
+    /**
+     * Number of bites this Biomass can endure before being eaten.
+     */
     public int bites;
+
+    /**
+    * Coordinates of the position of the Biomass.
+    */
     protected int x;
     protected int y;
 
