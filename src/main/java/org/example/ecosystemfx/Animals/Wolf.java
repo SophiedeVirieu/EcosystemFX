@@ -1,5 +1,6 @@
 package org.example.ecosystemfx.Animals;
 
+import javafx.scene.paint.Color;
 import org.example.ecosystemfx.base.Terrain2D;
 
 public class Wolf extends Animal {
@@ -18,6 +19,9 @@ public class Wolf extends Animal {
 
         setY(y);
     }
+
+    @Override
+    public Color getColor() {return new Color(112 / 255.0, 128 / 255.0, 144 / 255.0, 1);}
 
     @Override
     public void reproduce() {

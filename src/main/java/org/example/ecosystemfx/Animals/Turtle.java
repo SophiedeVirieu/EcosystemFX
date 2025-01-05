@@ -1,9 +1,11 @@
 package org.example.ecosystemfx.Animals;
 
+import javafx.scene.paint.Color;
 import org.example.ecosystemfx.Resources.TerrainResources;
 import org.example.ecosystemfx.base.Terrain2D;
 
 public class Turtle extends Animal {
+    private final Color color = new Color(0 / 255.0, 100 / 255.0, 0 / 255.0, 1);
 
     public Turtle(int x, int y) {
         super(x, y);
@@ -22,6 +24,8 @@ public class Turtle extends Animal {
 
         setY(y);
     }
+    @Override
+    public Color getColor() {return new Color(0 / 255.0, 100 / 255.0, 0 / 255.0, 1);}
 
     @Override
     public void reproduce() {

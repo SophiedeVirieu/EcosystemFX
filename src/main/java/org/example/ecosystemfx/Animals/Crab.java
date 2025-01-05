@@ -1,4 +1,5 @@
 package org.example.ecosystemfx.Animals;
+import javafx.scene.paint.Color;
 import org.example.ecosystemfx.Resources.TerrainResources;
 import org.example.ecosystemfx.base.Terrain2D;
 
@@ -21,6 +22,8 @@ public class Crab extends Animal {
         setY(y);
 
     }
+    @Override
+    public Color getColor() {return new Color(0 / 255.0, 0 / 255.0, 0 / 255.0, 1);}
 
     @Override
     public void reproduce() {

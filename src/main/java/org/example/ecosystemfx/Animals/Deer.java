@@ -1,9 +1,9 @@
 package org.example.ecosystemfx.Animals;
+import javafx.scene.paint.Color;
 import org.example.ecosystemfx.Resources.TerrainResources;
 import org.example.ecosystemfx.base.Terrain2D;
 
 public class Deer extends Animal {
-
     public Deer(int x, int y) {
         super(x, y);
         this.specie = species.DEER;
@@ -20,6 +20,8 @@ public class Deer extends Animal {
 
         setY(y);
     }
+    @Override
+    public Color getColor() {return new Color(139 / 255.0, 69 / 255.0, 19 / 255.0, 1);}
 
     @Override
     public void reproduce() {
