@@ -39,7 +39,7 @@ public class Terrain2D extends Canvas {
         super(width * cellSize, height * cellSize);
         heights = generateTerrain(width, height);
         smoothTerrain(heights, 5);
-        canvas = new Canvas(width * 5, height * 5);
+        canvas = new Canvas(width * cellSize, height * cellSize);
         listTerrainResources = new ArrayList<>();
 
         // Association between a list and a type of food

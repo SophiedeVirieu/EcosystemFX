@@ -13,8 +13,8 @@ import javafx.stage.Stage;
 
 public class IHM extends Application {
 
-    public static int width = 172;
-    public static int height = 108;
+    public static int width = 150;
+    public static int height = 90;
     private Simulation simulation;
 
     @Override
@@ -23,7 +23,7 @@ public class IHM extends Application {
         Terrain2D terrain = new Terrain2D(width, height);
         terrain.draw();
 
-        simulation = new Simulation(new int[]{width, height}, new int[]{5, 5, 5, 7, 5, 6, 7, 8, 9});
+        simulation = new Simulation(new int[]{width, height}, new int[]{10, 100, 20, 30, 15, 36, 17, 38, 80});
 
         Button startButton = new Button("Start");
         Button stopButton = new Button("Stop");
@@ -47,8 +47,8 @@ public class IHM extends Application {
 
         root.setRight(buttonBox); // the buttons are on the right
 
-        int scaledWidth = width * 5;
-        int scaledHeight = height * 5;
+        int scaledWidth = width * 10;
+        int scaledHeight = height * 10;
         Scene scene = new Scene(root, scaledWidth + 200, scaledHeight);  // +200 adds space for the buttons
         primaryStage.setTitle("Terrain with Controls");
         primaryStage.setScene(scene);
